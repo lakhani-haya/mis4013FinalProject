@@ -27,7 +27,7 @@
             while ($planner = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo "<div class='col-md-4 mb-4'>
                         <div class='card'>
-                            <img src='images/planners/{$planner['PlannerID']}.jpg' class='card-img-top' alt='Planner Image'>
+                             <img src='{$planner['image_url']}' class='card-img-top' alt='Planner Image'>
                             <div class='card-body'>
                                 <h5 class='card-title'>{$planner['FullName']}</h5>
                                 <p class='card-text'>Specialization: {$planner['Specialization']}</p>
