@@ -11,7 +11,7 @@
 </head>
 <body>
     <header class="bg-dark text-white text-center py-4">
-        <h1>Welcome to [Event Planners Inc.]</h1>
+        <h1>Welcome to The Event-uals!</h1>
         <p class="lead">Your trusted partner for unforgettable events.</p>
     </header>
 
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6P8OaLeSyT5gId07IJh6oqGVhYPm4AlnEoA&s" class="d-block w-100" alt="Engagement Party">
+                        <img src="https://images.pexels.com/photos/29723872/pexels-photo-29723872/free-photo-of-black-and-white-engagement-ring-exchange.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="d-block w-100" alt="Engagement Party">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>Engagement Parties</h5>
                             <p>Start your journey with a memorable celebration.</p>
