@@ -6,28 +6,27 @@
     <title>Clients</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">Event Planners Inc.</a>
+            <a class="navbar-brand" href="#">Event Planners Inc.</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php">Home</a>
+                        <a class="nav-link" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="planners.php">Planners</a>
+                        <a class="nav-link" href="#">Planners</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="clients.php">Clients</a>
+                        <a class="nav-link active" aria-current="page" href="#">Clients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="events.php">Events</a>
+                        <a class="nav-link" href="#">Events</a>
                     </li>
                 </ul>
             </div>
@@ -59,12 +58,22 @@
             </thead>
             <tbody>
                 <?php
-                // Include the database connection file
-                require_once 'db_connection.php';
+                // Database connection configuration
+                $serverName = "tcp:event-mgmt-server.database.windows.net,1433";
+                $connectionOptions = array(
+                    "UID" => "haya",
+                    "pwd" => "Database100",
+                    "Database" => "eventplan",
+                    "LoginTimeout" => 30,
+                    "Encrypt" => 1,
+                    "TrustServerCertificate" => 0
+                );
 
                 try {
-                    // Fetch data from the Clients table
-                    $query = "SELECT * FROM Clients";
+                    $conn = new PDO("sqlsrv:server=$serverName;Database=eventplan", $connectionOptions['UID'], $connectionOptions['pwd']);
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    $query = "SELECT * FROM dbo.Clients";
                     $stmt = $conn->query($query);
 
                     while ($client = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -97,7 +106,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="clientForm">
+                    <form method="POST" id="clientForm">
                         <input type="hidden" id="clientID" name="clientID">
                         <div class="mb-3">
                             <label for="fullName" class="form-label">Full Name</label>
@@ -123,40 +132,20 @@
     </div>
 
     <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p>&copy; 2024 [Event Planners Inc.] All rights reserved.</p>
+        <p>&copy; 2024 Event Planners Inc. All rights reserved.</p>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- JavaScript for handling form actions -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const clientForm = document.getElementById('clientForm');
             const clientModal = new bootstrap.Modal(document.getElementById('clientModal'));
-            let editMode = false;
 
-            // Handle form submission
-            clientForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const formData = new FormData(clientForm);
-
-                fetch(editMode ? 'update_client.php' : 'add_client.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(data => {
-                    alert(data);
-                    location.reload();
-                });
-            });
-
-            // Edit button click handler
             document.querySelectorAll('.edit-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const clientID = this.dataset.id;
-
                     fetch(`get_client.php?id=${clientID}`)
                         .then(response => response.json())
                         .then(data => {
@@ -166,18 +155,17 @@
                             document.getElementById('phoneNumber').value = data.PhoneNumber;
                             document.getElementById('address').value = data.Address;
 
-                            editMode = true;
+                            clientModal.show();
                         });
                 });
             });
 
-            // Delete button click handler
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const clientID = this.dataset.id;
 
                     if (confirm('Are you sure you want to delete this client?')) {
-                        fetch(`delete_client.php?id=${clientID}`, { method: 'GET' })
+                        fetch(`delete_client.php?id=${clientID}`)
                             .then(response => response.text())
                             .then(data => {
                                 alert(data);
@@ -185,6 +173,21 @@
                             });
                     }
                 });
+            });
+
+            clientForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const formData = new FormData(clientForm);
+                fetch(document.getElementById('clientID').value ? 'update_client.php' : 'add_client.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        alert(data);
+                        location.reload();
+                    });
             });
         });
     </script>
