@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clients</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -44,7 +43,6 @@
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clientModal">Add New Client</button>
         </div>
 
-        <!-- Clients Table -->
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -58,7 +56,6 @@
             </thead>
             <tbody>
                 <?php
-                // Database connection configuration
                 $serverName = "tcp:event-mgmt-server.database.windows.net,1433";
                 $connectionOptions = array(
                     "UID" => "haya",
@@ -97,7 +94,6 @@
         </table>
     </main>
 
-    <!-- Modal -->
     <div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="clientModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -135,7 +131,6 @@
         <p>&copy; 2024 Event Planners Inc. All rights reserved.</p>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
@@ -193,3 +188,4 @@
     </script>
 </body>
 </html>
+
