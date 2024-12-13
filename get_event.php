@@ -1,5 +1,5 @@
 <?php
-// Database connection configuration
+
 $serverName = "tcp:event-mgmt-server.database.windows.net,1433";
 $connectionOptions = array(
     "UID" => "haya",
@@ -10,7 +10,7 @@ $connectionOptions = array(
     "TrustServerCertificate" => 0
 );
 
-// Set the response header to JSON format
+
 header('Content-Type: application/json');
 
 try {
@@ -18,14 +18,14 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     if (isset($_GET['id'])) {
-        // Fetch details of a single event for editing
+        
         $stmt = $conn->prepare("SELECT * FROM dbo.Events WHERE EventID = ?");
         $stmt->execute([$_GET['id']]);
         $event = $stmt->fetch(PDO::FETCH_ASSOC);
         
         echo json_encode($event);
     } else {
-        // Fetch all events for the calendar view
+       
         $stmt = $conn->query("SELECT EventID, EventType, EventDate FROM dbo.Events");
         $events = [];
 
