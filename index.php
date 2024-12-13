@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Planning Company</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -41,7 +39,6 @@
     </header>
 
     <main class="container mt-4">
-        <!-- About Us Section -->
         <section class="mb-5 text-center">
             <h2>About Us</h2>
             <p class="mt-3">
@@ -50,7 +47,6 @@
             </p>
         </section>
 
-        <!-- Event Types Carousel -->
         <section>
             <h2 class="text-center mb-4">Our Event Types</h2>
             <div id="eventCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -90,10 +86,10 @@
     </main>
 
     <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p>&copy; 2024 [Event Planners Inc.] All rights reserved.</p>
+        <p>&copy; 2024 [Event-ual Planners Inc.] All rights reserved.</p>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
