@@ -10,17 +10,36 @@ $connectionOptions = array(
     "TrustServerCertificate" => 0
 );
 
+// Set the response header to JSON format
+header('Content-Type: application/json');
+
 try {
     $conn = new PDO("sqlsrv:server=$serverName;Database=eventplan", $connectionOptions['UID'], $connectionOptions['pwd']);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Prepare and execute the select query
-    $stmt = $conn->prepare("SELECT * FROM dbo.Events WHERE EventID = ?");
-    $stmt->execute([$_GET['id']]);
-    $event = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (isset($_GET['id'])) {
+        // Fetch details of a single event for editing
+        $stmt = $conn->prepare("SELECT * FROM dbo.Events WHERE EventID = ?");
+        $stmt->execute([$_GET['id']]);
+        $event = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        echo json_encode($event);
+    } else {
+        // Fetch all events for the calendar view
+        $stmt = $conn->query("SELECT EventID, EventType, EventDate FROM dbo.Events");
+        $events = [];
 
-    echo json_encode($event);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $events[] = [
+                'title' => $row['EventType'],
+                'start' => $row['EventDate'],  // Assuming EventDate is in a compatible format
+                'eventID' => $row['EventID']
+            ];
+        }
+
+        echo json_encode($events);
+    }
 } catch (PDOException $e) {
-    echo "Error: " . htmlspecialchars($e->getMessage());
+    echo json_encode(['error' => 'Error fetching event data: ' . htmlspecialchars($e->getMessage())]);
 }
-?>
+
