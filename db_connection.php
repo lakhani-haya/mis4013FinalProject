@@ -1,5 +1,5 @@
 <?php
-// Database connection configuration
+
 $serverName = "tcp:event-mgmt-server.database.windows.net,1433";
 $connectionOptions = array(
     "UID" => "haya",
@@ -11,11 +11,11 @@ $connectionOptions = array(
 );
 
 try {
-    // Create a new PDO instance
+    
     $conn = new PDO("sqlsrv:server=$serverName;Database=eventplan", $connectionOptions['UID'], $connectionOptions['pwd']);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    // Handle connection errors
+
     die("Error connecting to SQL Server: " . $e->getMessage());
 }
 ?>
