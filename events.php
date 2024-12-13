@@ -6,6 +6,9 @@
     <title>Events</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -39,7 +42,10 @@
     </header>
 
     <main class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <!-- FullCalendar Calendar -->
+        <div id="calendar"></div>
+
+        <div class="d-flex justify-content-between align-items-center mb-4 mt-5">
             <h2>Events List</h2>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal">Add New Event</button>
         </div>
@@ -138,15 +144,43 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the calendar
+            var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+                initialView: 'dayGridMonth', // Display the month view by default
+                events: function(fetchInfo, successCallback, failureCallback) {
+                    fetch('get_events.php') // This file will return events in JSON format
+                        .then(response => response.json())
+                        .then(data => {
+                            // Format the events for FullCalendar
+                            const events = data.map(event => ({
+                                title: event.EventType, // Event name
+                                start: event.EventDate, // Event date
+                                description: event.Description // Optional event description
+                            }));
+                            successCallback(events);
+                        })
+                        .catch(failureCallback);
+                },
+                eventClick: function(info) {
+                    alert('Event: ' + info.event.title + '\n' + info.event.start);
+                }
+            });
+
+            // Render the calendar
+            calendar.render();
+
             const eventForm = document.getElementById('eventForm');
             const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
 
             document.querySelectorAll('.edit-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const eventID = this.dataset.id;
-                    fetch(get_event.php?id=${eventID})
+                    fetch('get_event.php?id=' + eventID)
                         .then(response => response.json())
                         .then(data => {
                             document.getElementById('eventID').value = data.EventID;
@@ -165,7 +199,7 @@
                     const eventID = this.dataset.id;
 
                     if (confirm('Are you sure you want to delete this event?')) {
-                        fetch(delete_event.php?id=${eventID})
+                        fetch('delete_event.php?id=' + eventID)
                             .then(response => response.text())
                             .then(data => {
                                 alert(data);
