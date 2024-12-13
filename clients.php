@@ -60,24 +60,28 @@
             <tbody>
                 <?php
                 // Include the database connection file
-                include 'db_connection.php';
+                require_once 'db_connection.php';
 
-                // Fetch data from the Clients table
-                $query = "SELECT * FROM Clients";
-                $stmt = $conn->query($query);
+                try {
+                    // Fetch data from the Clients table
+                    $query = "SELECT * FROM Clients";
+                    $stmt = $conn->query($query);
 
-                while ($client = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr>
-                            <td>{$client['ClientID']}</td>
-                            <td>{$client['FullName']}</td>
-                            <td>{$client['Email']}</td>
-                            <td>{$client['PhoneNumber']}</td>
-                            <td>{$client['Address']}</td>
-                            <td>
-                                <button class='btn btn-warning btn-sm edit-btn' data-id='{$client['ClientID']}' data-bs-toggle='modal' data-bs-target='#clientModal'>Edit</button>
-                                <button class='btn btn-danger btn-sm delete-btn' data-id='{$client['ClientID']}'>Delete</button>
-                            </td>
-                        </tr>";
+                    while ($client = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<tr>
+                                <td>{$client['ClientID']}</td>
+                                <td>{$client['FullName']}</td>
+                                <td>{$client['Email']}</td>
+                                <td>{$client['PhoneNumber']}</td>
+                                <td>{$client['Address']}</td>
+                                <td>
+                                    <button class='btn btn-warning btn-sm edit-btn' data-id='{$client['ClientID']}' data-bs-toggle='modal' data-bs-target='#clientModal'>Edit</button>
+                                    <button class='btn btn-danger btn-sm delete-btn' data-id='{$client['ClientID']}'>Delete</button>
+                                </td>
+                            </tr>";
+                    }
+                } catch (PDOException $e) {
+                    echo "<tr><td colspan='6'>Error fetching clients: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
                 }
                 ?>
             </tbody>
