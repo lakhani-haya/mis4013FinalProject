@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Planners</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -41,10 +40,8 @@
     <main class="container mt-4">
         <div class="row">
             <?php
-            // Include the database connection file
             include 'db_connection.php';
 
-            // Fetch data from the Planners table
             $query = "SELECT * FROM Planners";
             $stmt = $conn->query($query);
 
@@ -66,10 +63,10 @@
     </main>
 
     <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p>&copy; 2024 [Event Planners Inc.] All rights reserved.</p>
+        <p>&copy; 2024 [Event Planners] All rights reserved.</p>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
