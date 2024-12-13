@@ -56,7 +56,7 @@
             <div id="eventCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="https://images.ctfassets.net/3dar4x4x74wk/5PHkzNDpBYPd4xBrxEHSd7/7cd51db72c48c791a4859b7052b3296d/Delux_Tablescape_130.jpg?w=808" class="d-block w-100" alt="Birthday Party">
+                        <img src="https://images.pexels.com/photos/7156000/pexels-photo-7156000.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="d-block w-100" alt="Birthday Party">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>Birthday Parties</h5>
                             <p>Celebrate with style and joy.</p>
